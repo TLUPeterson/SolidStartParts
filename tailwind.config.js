@@ -12,6 +12,9 @@ module.exports = {
     },
     extend: {
       colors: {
+        'custom-bg': '#DDF9F1',
+        'main-button': '#55BDCA',
+        'secondary-button': '#EAFCF7',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

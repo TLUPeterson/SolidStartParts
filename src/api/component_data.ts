@@ -52,6 +52,209 @@ export const fetchCPU = async () => {
     return data.data.map((product: any) => ({
       id: product.id,
       name: product.name,
+      thumbnail: product.thumbnails[0],
+      socket: product.categorySubName,
+      price: product.price
+    }));
+
+  }catch (error) {
+    console.error("Fetch error: ", error);
+    throw error;
+  }
+};
+
+
+export const fetchMotherboard = async () => {
+  try {
+    const response = await fetch(`https://api.hinnavaatlus.ee/search/?categoryId=33&amp;page=1&amp;per-page=50&amp;sort=-views`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    //console.log(data);
+    return data.data.map((product: any) => ({
+      id: product.id,
+      name: product.name,
+      //thumbnail: product.thumbnails[0],
+      socket: product.categorySubName,
+      price: product.price
+    }));
+
+  }catch (error) {
+    console.error("Fetch error: ", error);
+    throw error;
+  }
+};
+
+
+export const fetchGPU = async () => {
+  try {
+    const response = await fetch(`https://api.hinnavaatlus.ee/search/?categoryId=44&amp;page=1&amp;per-page=50&amp;sort=-views`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    //console.log(data);
+    return data.data.map((product: any) => ({
+      id: product.id,
+      name: product.name,
+      //thumbnail: product.thumbnails[0],
+      price: product.price
+    }));
+
+  }catch (error) {
+    console.error("Fetch error: ", error);
+    throw error;
+  }
+};
+
+export const fetchMemory = async () => {
+  try {
+    const response = await fetch(`https://api.hinnavaatlus.ee/search/?categoryId=29&amp;page=1&amp;per-page=50&amp;sort=-views`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    //console.log(data);
+    return data.data.map((product: any) => ({
+      id: product.id,
+      name: product.name,
+      //thumbnail: product.thumbnails[0],
+      speed: product.categorySubName,  
+      price: product.price
+    }));
+
+  }catch (error) {
+    console.error("Fetch error: ", error);
+    throw error;
+  }
+};
+
+
+export const fetchStorage = async () => {
+  try {
+    const response = await fetch(`https://api.hinnavaatlus.ee/search/?categoryId=37&amp;page=1&amp;per-page=50&amp;sort=-views`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    //console.log(data);
+    return data.data.map((product: any) => ({
+      id: product.id,
+      name: product.name,
+      //thumbnail: product.thumbnails[0],
+      //category: product.categorySubName,
+      price: product.price
+    }));
+
+  }catch (error) {
+    console.error("Fetch error: ", error);
+    throw error;
+  }
+};
+
+
+export const fetchSSD = async () => {
+  try {
+    const response = await fetch(`https://api.hinnavaatlus.ee/search/?categoryId=9520&amp;page=1&amp;per-page=50&amp;sort=-views`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    //console.log(data);
+    return data.data.map((product: any) => ({
+      id: product.id,
+      name: product.name,
+      //thumbnail: product.thumbnails[0],
+      //category: product.categorySubName,
+      price: product.price
+    }));
+
+  }catch (error) {
+    console.error("Fetch error: ", error);
+    throw error;
+  }
+};
+
+
+export const fetchMonitor = async () => {
+  try {
+    const response = await fetch(`https://api.hinnavaatlus.ee/search/?categoryId=9344&amp;page=1&amp;per-page=50&amp;sort=-views`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    //console.log(data);
+    return data.data.map((product: any) => ({
+      id: product.id,
+      name: product.name,
+      //thumbnail: product.thumbnails[0],
+      size: product.categorySubName,
+      price: product.price
+    }));
+
+  }catch (error) {
+    console.error("Fetch error: ", error);
+    throw error;
+  }
+};
+
+
+export const fetchCooler = async () => {
+  try {
+    const response = await fetch(`https://api.hinnavaatlus.ee/search/?categoryId=42&amp;page=1&amp;per-page=50&amp;sort=-views`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    //console.log(data);
+    return data.data.map((product: any) => ({
+      id: product.id,
+      name: product.name,
+      //thumbnail: product.thumbnails[0],
+      category: product.categorySubName?"CPU Cooler":"general",
+      price: product.price
+    }));
+
+  }catch (error) {
+    console.error("Fetch error: ", error);
+    throw error;
+  }
+};
+
+export const fetchCase = async () => {
+  try {
+    const response = await fetch(`https://api.hinnavaatlus.ee/search/?categoryId=56&amp;page=1&amp;per-page=50&amp;sort=-views`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    //console.log(data);
+    return data.data.map((product: any) => ({
+      id: product.id,
+      name: product.name,
+      //thumbnail: product.thumbnails[0],
+      //category: product.categorySubName,
+      price: product.price
+    }));
+
+  }catch (error) {
+    console.error("Fetch error: ", error);
+    throw error;
+  }
+};
+
+export const fetchPSU = async () => {
+  try {
+    const response = await fetch(`https://api.hinnavaatlus.ee/search/?categoryId=9161&amp;page=1&amp;per-page=50&amp;sort=-views`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    //console.log(data);
+    return data.data.map((product: any) => ({
+      id: product.id,
+      name: product.name,
       //thumbnail: product.thumbnails[0],
       category: product.categorySubName,
       price: product.price
@@ -62,3 +265,4 @@ export const fetchCPU = async () => {
     throw error;
   }
 };
+

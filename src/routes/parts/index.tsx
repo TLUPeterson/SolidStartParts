@@ -15,46 +15,58 @@ import {
 export default function Parts() {
   const items = [
     {
-      invoice: "INV001",
-      paymentStatus: "Paid",
-      totalAmount: "$250.00",
-      paymentMethod: "Credit Card"
+      component: "CPU",
+      selection: "Paid",
+      price: "$250.00",
+      url: "amazon"
     },
     {
-      invoice: "INV002",
-      paymentStatus: "Pending",
-      totalAmount: "$150.00",
-      paymentMethod: "PayPal"
+      component: "CPU Cooler",
+      selection: "Pending",
+      price: "$150.00",
+      url: "ebay"
     },
     {
-      invoice: "INV003",
-      paymentStatus: "Unpaid",
-      totalAmount: "$350.00",
-      paymentMethod: "Bank Transfer"
+      component: "Motherboard",
+      selection: "Unpaid",
+      price: "$350.00",
+      url: "amazon"
     },
     {
-      invoice: "INV004",
-      paymentStatus: "Paid",
-      totalAmount: "$450.00",
-      paymentMethod: "Credit Card"
+      component: "Memory",
+      selection: "Paid",
+      price: "$450.00",
+      url: "amaozn"
     },
     {
-      invoice: "INV005",
-      paymentStatus: "Paid",
-      totalAmount: "$550.00",
-      paymentMethod: "PayPal"
+      component: "Storage",
+      selection: "Paid",
+      price: "$550.00",
+      url: "ebay"
     },
     {
-      invoice: "INV006",
-      paymentStatus: "Pending",
-      totalAmount: "$200.00",
-      paymentMethod: "Bank Transfer"
+      component: "Video Card",
+      selection: "Pending",
+      price: "$200.00",
+      url: "amazon"
     },
     {
-      invoice: "INV007",
-      paymentStatus: "Unpaid",
-      totalAmount: "$300.00",
-      paymentMethod: "Credit Card"
+      component: "Case",
+      selection: "Unpaid",
+      price: "$300.00",
+      url: "amazon"
+    },
+    {
+      component: "Power Supply",
+      selection: "...",
+      price: "$100.00",
+      url: "ebay"
+    },
+    {
+      component: "Monitor",
+      selection: "...",
+      price: "$500.00",
+      url: "amazon"
     }
   ]
   return (
@@ -72,10 +84,10 @@ export default function Parts() {
           <TableBody>
             <For each={items}>{(item) => (
               <TableRow>
-                <TableCell class="font-medium">{item.invoice}</TableCell>
-                <TableCell>{item.paymentStatus}</TableCell>
-                <TableCell>{item.paymentMethod}</TableCell>
-                <TableCell class="text-right">{item.totalAmount}</TableCell>
+                <TableCell class="font-medium">{item.component}</TableCell>
+                <TableCell>{item.selection}</TableCell>
+                <TableCell>{item.url}</TableCell>
+                <TableCell class="text-right">{item.price}</TableCell>
               </TableRow>
             )}</For>
           </TableBody>
