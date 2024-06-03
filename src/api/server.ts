@@ -3,7 +3,7 @@ import { redirect } from "@solidjs/router";
 import { useSession } from "vinxi/http";
 import { eq } from "drizzle-orm";
 import { db } from "./db";
-import { Users } from "../../drizzle/schema";
+import { users } from "../../drizzle/schema";
 
 function validateUsername(username: unknown) {
   if (typeof username !== "string" || username.length < 3) {
@@ -18,7 +18,7 @@ function validatePassword(password: unknown) {
 }
 
 async function login(username: string, password: string) {
-  const user = db.select().from(Users).where(eq(Users.username, username)).get();
+  const user = db.select().from(users).where(eq(users.username, username)).get();
   if (!user || password !== user.password) throw new Error("Invalid login");
   return user;
 }
@@ -26,12 +26,12 @@ async function login(username: string, password: string) {
 async function register(username: string, password: string) {
   const existingUser = db
     .select()
-    .from(Users)
-    .where(eq(Users.username, username))
+    .from(users)
+    .where(eq(users.username, username))
     .get();
   if (existingUser) throw new Error("User already exists");
   return db
-    .insert(Users)
+    .insert(users)
     .values({ username, password })
     .returning()
     .get();
@@ -75,7 +75,7 @@ export async function getUser() {
   if (userId === undefined) throw redirect("/login");
 
   try {
-    const user = db.select().from(Users).where(eq(Users.id, userId)).get();
+    const user = db.select().from(users).where(eq(users.id, userId)).get();
     if (!user) throw redirect("/login");
     return { id: user.id, username: user.username };
   } catch {
