@@ -40,22 +40,24 @@ export const fetchProductById = async (id: string) => {
   }
 };
 
-//TODO: Need to have page number
-export const fetchCPU = async () => {
+//TODO: Need to have page number. Currently cant seem to understand how hinnavaatlus API works
+export const fetchCPU = async (page: string) => {
   try {
-    const response = await fetch(`https://api.hinnavaatlus.ee/search/?categoryId=41&amp;page=1&amp;per-page=50&amp;sort=-views`);
+    const response = await fetch(`https://api.hinnavaatlus.ee/search/?categoryId=41&amp;page=${page}&amp;`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
-    //console.log(data);
-    return data.data.map((product: any) => ({
+    const productData = data.data.map((product: any) => ({
       id: product.id,
       name: product.name,
       thumbnail: product.thumbnails[0],
       socket: product.categorySubName,
       price: product.price
-    }));
+    }))
+    const productAmount = data.total
+    //console.log("fetch log",  productAmount);
+    return { productData, productAmount };
 
   }catch (error) {
     console.error("Fetch error: ", error);

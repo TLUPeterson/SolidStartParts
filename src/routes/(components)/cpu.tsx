@@ -1,20 +1,44 @@
-import { createSignal, createResource, For, Show, Suspense } from 'solid-js';
+// src/components/CPU.tsx
+import { createSignal, createResource, For, Show, Suspense, createEffect } from 'solid-js';
 import { fetchCPU } from '~/api/component_data';
-import { Button } from "~/components/ui/button"
+import { selectedParts as selectedProduct, setSelectedParts as setSelectedProduct } from '~/store/store';
+import { Button } from "~/components/ui/button";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow
-} from "~/components/ui/table"
+} from "~/components/ui/table";
+import {
+  Pagination,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationItems,
+  PaginationNext,
+  PaginationPrevious
+} from "~/components/ui/pagination";
+import { useNavigate } from '@solidjs/router';
 
 export default function CPU() {
-  const [products, { refetch }] = createResource(fetchCPU);
+  const [productAmount, setProductAmount] = createSignal(0);
   const [currentPage, setCurrentPage] = createSignal(1);
-  const itemsPerPage = 24;
+  const itemsPerPage = 5;
+  const navigate = useNavigate();
+
+  const [products, { refetch }] = createResource(async () => {
+    const { productData, productAmount } = await fetchCPU("3");
+    setProductAmount(productAmount);
+    return productData;
+  });
+
+  createEffect(() => {
+    if (productAmount() === 0) {
+      console.log("Initial products loaded, refetching...");
+      refetch();
+    }
+  });
 
   const paginatedProducts = () => {
     const start = (currentPage() - 1) * itemsPerPage;
@@ -22,9 +46,20 @@ export default function CPU() {
     return products()?.slice(start, end) || [];
   };
 
-  const totalPages = () => Math.ceil((products()?.length || 0) / itemsPerPage);
+  const totalPages = () => Math.ceil(products().length / itemsPerPage);
 
-  console.log("Products:", products());
+  const handleSelect = (product: { thumbnail: string; name: any; price: any; url: any; }) => {
+    setSelectedProduct([
+      ...selectedProduct(),
+      {
+        thumbnail: "CPU",
+        name: product.name,
+        price: product.price,
+        url: product.url
+      }
+    ]);
+    navigate('/parts');
+  };
 
   return (
     <Suspense fallback={<p>Loading...</p>}>
@@ -44,33 +79,40 @@ export default function CPU() {
                 <TableRow>
                   <TableCell class="font-medium">
                     <img 
-                    src={product.thumbnail} 
-                    alt={product.name}
-                    class="w-full max-w-xs mx-left"
+                      src={product.thumbnail} 
+                      alt={product.name}
+                      class="w-full max-w-xs mx-left"
                     />
                   </TableCell>
                   <TableCell>{product.name}</TableCell>
                   <TableCell>{product.price}</TableCell>
-                  <TableCell class="text-right"><Button class="bg-main-button">Add</Button></TableCell>
+                  <TableCell class="text-right">
+                    <Button 
+                      class="bg-main-button"
+                      onClick={() => handleSelect(product)}
+                    >
+                      Add
+                    </Button>
+                  </TableCell>
                 </TableRow>
               )}</For>
             </TableBody>
           </Table>
-        </div>
-        <div>
-          <button 
-            onClick={() => setCurrentPage(currentPage() - 1)} 
-            disabled={currentPage() === 1}
+          
+          <Pagination
+            count={totalPages()}
+            page={currentPage()}
+            onPageChange={(page) => setCurrentPage(page)}
+            siblingCount={1}
+            showFirst={true}
+            showLast
+            itemComponent={(props) => <PaginationItem page={props.page}>{props.page}</PaginationItem>}
+            ellipsisComponent={() => <PaginationEllipsis />}
           >
-            Previous
-          </button>
-          <span>Page {currentPage()} of {totalPages()}</span>
-          <button 
-            onClick={() => setCurrentPage(currentPage() + 1)} 
-            disabled={currentPage() === totalPages()}
-          >
-            Next
-          </button>
+            <PaginationPrevious />
+            <PaginationItems />
+            <PaginationNext />
+          </Pagination>
         </div>
       </Show>
       <Show when={!products.loading && !products()}>
