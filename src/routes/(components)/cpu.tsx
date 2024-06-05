@@ -1,7 +1,7 @@
 // src/components/CPU.tsx
 import { createSignal, createResource, For, Show, Suspense, createEffect } from 'solid-js';
 import { fetchCPU } from '~/api/component_data';
-import { selectedParts as selectedProduct, setSelectedParts as setSelectedProduct } from '~/store/store';
+import { selectedParts as selectedProduct, setSelectedParts as setSelectedProduct, addPart } from '~/store/store';
 import { Button } from "~/components/ui/button";
 import {
   Table,
@@ -20,6 +20,7 @@ import {
   PaginationPrevious
 } from "~/components/ui/pagination";
 import { useNavigate } from '@solidjs/router';
+import { Part } from "~/types/parts";
 
 export default function CPU() {
   const [productAmount, setProductAmount] = createSignal(0);
@@ -28,7 +29,7 @@ export default function CPU() {
   const navigate = useNavigate();
 
   const [products, { refetch }] = createResource(async () => {
-    const { productData, productAmount } = await fetchCPU("3");
+    const { productData, productAmount } = await fetchCPU("1");
     setProductAmount(productAmount);
     return productData;
   });
@@ -48,16 +49,13 @@ export default function CPU() {
 
   const totalPages = () => Math.ceil(products().length / itemsPerPage);
 
-  const handleSelect = (product: { thumbnail: string; name: any; price: any; url: any; }) => {
-    setSelectedProduct([
-      ...selectedProduct(),
-      {
-        thumbnail: "CPU",
-        name: product.name,
-        price: product.price,
-        url: product.url
-      }
-    ]);
+  const handleSelect = (product: Part) => {
+    const newPart: Part = {
+      ...product,
+      component: "CPU"
+    };
+
+    addPart("CPU", newPart);
     navigate('/parts');
   };
 

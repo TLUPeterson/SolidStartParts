@@ -20,6 +20,8 @@ Neccessary ids:
 
 */
 
+import { ConsoleLogWriter } from "drizzle-orm";
+
 export const fetchProductById = async (id: string) => {
   try {
     const response = await fetch(`https://api.hinnavaatlus.ee/product/${id}`);
@@ -40,22 +42,26 @@ export const fetchProductById = async (id: string) => {
   }
 };
 
-//TODO: Need to have page number. Currently cant seem to understand how hinnavaatlus API works
+//https://api.hinnavaatlus.ee/search/?categoryId=41&amp;page=${page}&amp;
 export const fetchCPU = async (page: string) => {
   try {
-    const response = await fetch(`https://api.hinnavaatlus.ee/search/?categoryId=41&amp;page=${page}&amp;`);
+    const response = await fetch(`https://cms.arvutitark.ee/api/products?sort=top&brands=&prices=&price=&attributes=&categories=15&shops=&perPage=20&page=${page}&locale=et`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
+    //console.log(response);
     const data = await response.json();
+    //console.log(data);
     const productData = data.data.map((product: any) => ({
       id: product.id,
-      name: product.name,
-      thumbnail: product.thumbnails[0],
-      socket: product.categorySubName,
-      price: product.price
+      name: product.name.en,
+      thumbnail: product.main_image.image_sizes.small.webp_url,
+      socket: product.main_attributes[0].values[0].en,
+      price: product.price,
+      url: product.path.en
     }))
-    const productAmount = data.total
+    console.log(productData);
+    const productAmount = 20
     //console.log("fetch log",  productAmount);
     return { productData, productAmount };
 

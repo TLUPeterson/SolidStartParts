@@ -1,6 +1,5 @@
-// src/components/Parts.tsx
-import { For } from "solid-js";
-import { selectedParts as selectedProduct } from "~/store/store";
+import { For, createEffect, createMemo } from "solid-js";
+import { selectedParts, removePart } from "~/store/store";
 import { Button } from "~/components/ui/button";
 import {
   Table,
@@ -11,32 +10,62 @@ import {
   TableRow
 } from "~/components/ui/table";
 
+const defaultParts: { [key: string]: string } = {
+  CPU: "/cpu",
+  Motherboard: "/motherboard",
+  RAM: "/ram",
+  GPU: "/gpu",
+  Storage: "/storage",
+  PSU: "/psu",
+  Case: "/case"
+};
+
 export default function Parts() {
+  const memoizedSelectedParts = createMemo(() => selectedParts());
+
+  createEffect(() => {
+    console.log("Selected parts updated:", memoizedSelectedParts());
+  });
+
+
   return (
-    <>
-      <div>
-          <Button><a href="/cpu">CPu</a></Button>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead class="w-[100px]">Component</TableHead>
-              <TableHead>Item</TableHead>
-              <TableHead>Price</TableHead>
-              <TableHead class="text-right">Where</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <For each={selectedProduct()}>{(item) => (
+    <div>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead class="w-[100px]">Component</TableHead>
+            <TableHead>Item</TableHead>
+            <TableHead>Price</TableHead>
+            <TableHead class="text-right">Actions</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <For each={Object.keys(defaultParts)}>
+            {(component) => (
               <TableRow>
-                <TableCell class="font-medium">{item.thumbnail}</TableCell>
-                <TableCell>{item.name}</TableCell>
-                <TableCell>{item.price}</TableCell>
-                {/* <TableCell class="text-right">{item.url}</TableCell> */}
+                <TableCell class="font-medium">{component}</TableCell>
+                <TableCell>
+                  {memoizedSelectedParts()[component]?.name || `No ${component} selected`}
+                </TableCell>
+                <TableCell>
+                  {memoizedSelectedParts()[component]?.price || "-"}
+                </TableCell>
+                <TableCell class="text-right">
+                  {memoizedSelectedParts()[component] ? (
+                    <Button onClick={() => removePart(component)}>
+                      Remove
+                    </Button>
+                  ) : (
+                    <Button>
+                      <a href={defaultParts[component]}>Add {component}</a>
+                    </Button>
+                  )}
+                </TableCell>
               </TableRow>
-            )}</For>
-          </TableBody>
-        </Table>
-      </div>
-    </>
+            )}
+          </For>
+        </TableBody>
+      </Table>
+    </div>
   );
 }
