@@ -11,14 +11,3 @@ export const pcsetups = sqliteTable('pcsetups', {
   userId: integer('userId').references(() => users.id).notNull(),
   name: text('name').notNull(),
 });
-
-export const cpus = sqliteTable('cpus', {
-  id: integer('id').primaryKey().unique().notNull(),
-  name: text('name').notNull(),
-  cores: integer('cores').notNull(),
-  threads: integer('threads').notNull(),
-  baseClock: text('baseClock').notNull(),
-  boostClock: text('boostClock').notNull(),
-  tdp: integer('tdp').notNull(),
-});
-

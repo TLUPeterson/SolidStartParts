@@ -85,7 +85,7 @@ export default function Storage() {
                   <TableCell>{product.price}</TableCell>
                   <TableCell class="text-right">
                     <Button 
-                      class="bg-main-button"
+                      class="bg-customgreen text-customwhite hover:text-customwhite hover:bg-customblue"
                       onClick={() => handleSelect(product)}
                     >
                       Add
