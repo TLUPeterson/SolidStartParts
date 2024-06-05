@@ -13,11 +13,12 @@ import {
 const defaultParts: { [key: string]: string } = {
   CPU: "/cpu",
   Motherboard: "/motherboard",
-  RAM: "/ram",
+  Memory: "/memory",
   GPU: "/gpu",
   Storage: "/storage",
   PSU: "/psu",
-  Case: "/case"
+  Case: "/case",
+  Monitor: "/monitor",
 };
 
 export default function Parts() {
@@ -45,6 +46,7 @@ export default function Parts() {
               <TableRow>
                 <TableCell class="font-medium">{component}</TableCell>
                 <TableCell>
+                  <img src={memoizedSelectedParts()[component]?.thumbnail} class="h-12"/>
                   {memoizedSelectedParts()[component]?.name || `No ${component} selected`}
                 </TableCell>
                 <TableCell>

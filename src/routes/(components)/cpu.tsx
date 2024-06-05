@@ -1,7 +1,7 @@
 // src/components/CPU.tsx
 import { createSignal, createResource, For, Show, Suspense, createEffect } from 'solid-js';
 import { fetchCPU } from '~/api/component_data';
-import { selectedParts as selectedProduct, setSelectedParts as setSelectedProduct, addPart } from '~/store/store';
+import {  addPart } from '~/store/store';
 import { Button } from "~/components/ui/button";
 import {
   Table,

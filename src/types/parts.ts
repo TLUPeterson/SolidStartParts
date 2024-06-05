@@ -3,8 +3,13 @@ export interface Part {
     id: number;
     name: string;
     thumbnail: string;
-    socket: string;
     price: number;
-    component?: string;
     url: string;
+    component?: string;
+    socket?: string;
+    cores?: number;
+    tdp?: number;
+    formfactor?: string;
+    memoryslots?: number;
 }
+

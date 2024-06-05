@@ -1,6 +1,6 @@
 import { createSignal, createResource, For, Show, Suspense, createEffect } from 'solid-js';
-import { fetchGPU } from '~/api/component_data';
-import {  addPart } from '~/store/store';
+import { fetchMotherboard } from '~/api/component_data';
+import { addPart } from '~/store/store';
 import { Button } from "~/components/ui/button";
 import {
   Table,
@@ -21,24 +21,26 @@ import {
 import { useNavigate } from '@solidjs/router';
 import { Part } from "~/types/parts";
 
-export default function GPU() {
+export default function Motherboard() {
   const [productAmount, setProductAmount] = createSignal(0);
   const [currentPage, setCurrentPage] = createSignal(1);
   const itemsPerPage = 5;
   const navigate = useNavigate();
 
   const [products, { refetch }] = createResource(async () => {
-    const { productData, productAmount } = await fetchGPU("1");
+    const { productData, productAmount } = await fetchMotherboard("1");
+    console.log(productData);
     setProductAmount(productAmount);
     return productData;
   });
 
+  /*
   createEffect(() => {
     if (productAmount() === 0) {
       console.log("Initial products loaded, refetching...");
       refetch();
     }
-  });
+  });*/
 
   const paginatedProducts = () => {
     const start = (currentPage() - 1) * itemsPerPage;
@@ -51,10 +53,10 @@ export default function GPU() {
   const handleSelect = (product: Part) => {
     const newPart: Part = {
       ...product,
-      component: "GPU"
+      component: "Motherboard"
     };
 
-    addPart("GPU", newPart);
+    addPart("Motherboard", newPart);
     navigate('/parts');
   };
 

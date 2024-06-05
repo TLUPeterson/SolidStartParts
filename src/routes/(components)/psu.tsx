@@ -1,5 +1,5 @@
 import { createSignal, createResource, For, Show, Suspense, createEffect } from 'solid-js';
-import { fetchGPU } from '~/api/component_data';
+import { fetchPSU } from '~/api/component_data';
 import {  addPart } from '~/store/store';
 import { Button } from "~/components/ui/button";
 import {
@@ -21,14 +21,14 @@ import {
 import { useNavigate } from '@solidjs/router';
 import { Part } from "~/types/parts";
 
-export default function GPU() {
+export default function PSU() {
   const [productAmount, setProductAmount] = createSignal(0);
   const [currentPage, setCurrentPage] = createSignal(1);
   const itemsPerPage = 5;
   const navigate = useNavigate();
 
   const [products, { refetch }] = createResource(async () => {
-    const { productData, productAmount } = await fetchGPU("1");
+    const { productData, productAmount } = await fetchPSU("1");
     setProductAmount(productAmount);
     return productData;
   });
@@ -51,10 +51,10 @@ export default function GPU() {
   const handleSelect = (product: Part) => {
     const newPart: Part = {
       ...product,
-      component: "GPU"
+      component: "PSU"
     };
 
-    addPart("GPU", newPart);
+    addPart("PSU", newPart);
     navigate('/parts');
   };
 
