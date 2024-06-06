@@ -15,7 +15,7 @@ module.exports = {
 //https://coolors.co/032df1-f0f0f0-ff785a-191919-119da4
         'customwhite' : '#f0f0f0', 
         'customblue' : '#032df1',
-        'customorange' : '#ff785a',
+        'customorange' : '#DB6C79',
         'customblack' : '#191919',
         'customgreen' : '#3AB795',
         border: "hsl(var(--border))",

@@ -30,6 +30,13 @@ export default function Parts() {
     console.log("Selected parts updated:", memoizedSelectedParts());
   });
 
+  const totalPrice = createMemo(() => {
+    return Object.keys(defaultParts).reduce((total, component) => {
+      const part = memoizedSelectedParts()[component];
+      return total + (part?.price || 0);
+    }, 0);
+  });
+
 
   return (
     <div class='mx-[15%]'>
@@ -46,7 +53,8 @@ export default function Parts() {
           <For each={Object.keys(defaultParts)}>
             {(component) => (
               <TableRow>
-                <TableCell class="font-medium text-customblue font-bold">{component}</TableCell>
+                <TableCell class="font-medium text-customblue font-bold">
+                  <a href={component}>{component}</a></TableCell>
                 <TableCell>
                 <div class="flex items-center space-x-2">
                   <img src={memoizedSelectedParts()[component]?.thumbnail} class="h-12"/>
@@ -58,11 +66,19 @@ export default function Parts() {
                 </TableCell>
                 <TableCell class="text-right">
                   {memoizedSelectedParts()[component] ? (
-                    <a href='#' onClick={() => removePart(component)} class="group inline-flex items-center justify-center">
-                    <IconRemove class="h-4 w-4 text-black group-hover:text-customorange"/>
-                  </a>
-                  
-
+                    /*<a href='#' onClick={() => removePart(component)} class="group inline-flex items-center justify-center">
+                      <IconRemove class="h-4 w-4 text-black group-hover:text-customorange"/>
+                    </a>*/
+                    <>
+                    <Button class="bg-customorange text-customwhite hover:text-customwhite hover:bg-customblue" onClick={() => removePart(component)}>
+                    Remove
+                  </Button>
+                  <Button class="ml-2 bg-customgreen hover:bg-customblue">
+                    <a href={`https://Arvutitark.ee${memoizedSelectedParts()[component]?.url}`} target="_blank" rel="noopener noreferrer" class="text-customwhite">
+                    Buy
+                    </a>                  
+                  </Button>
+                  </>
                   ) : (
                     <Button class="bg-customgreen text-customwhite hover:text-customwhite hover:bg-customblue">
                       <a href={defaultParts[component]}>Add {component}</a>
@@ -72,6 +88,13 @@ export default function Parts() {
               </TableRow>
             )}
           </For>
+          <TableRow>
+            <TableCell></TableCell>
+            <TableCell></TableCell>
+            <TableCell class="text-right">
+              Total: {totalPrice().toFixed(2)}
+            </TableCell>
+          </TableRow>
         </TableBody>
       </Table>
     </div>
