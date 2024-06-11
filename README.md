@@ -1,7 +1,7 @@
 # SolidStartParts
 
 PC buliding webpage.
-![Tux, the Linux mascot](/public/images/partspic.png)
+![webpage image](/public/images/partspic.png)
 
 ## Creating a project
 
