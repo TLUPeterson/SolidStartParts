@@ -14,7 +14,7 @@ export default function Index(){
               </div>
             </div>
             <div class="lg:w-1/2 xl:w-3/5 mt-10 lg:mt-0 flex justify-center">
-              <img class="rounded shadow-lg" src="https://dummyimage.com/600x400/343a40/6c757d" alt="PC Parts" />
+              <img class="rounded shadow-lg" src="/images/partspic2.png" alt="PC Parts" />
             </div>
           </div>
         </div>

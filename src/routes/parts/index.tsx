@@ -10,8 +10,6 @@ import {
   TableRow
 } from "~/components/ui/table";
 
-import IconRemove from "~/components/ui/remove";
-
 const defaultParts: { [key: string]: string } = {
   CPU: "/cpu",
   Motherboard: "/motherboard",
@@ -91,7 +89,7 @@ export default function Parts() {
           <TableRow>
             <TableCell></TableCell>
             <TableCell></TableCell>
-            <TableCell class="text-right">
+            <TableCell class="text-right text-customgreen font-bold	text-2xl">
               Total: {totalPrice().toFixed(2)}
             </TableCell>
           </TableRow>

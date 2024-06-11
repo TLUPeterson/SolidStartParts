@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "vinxi dev",
     "build": "vinxi build",
-    "start": "vinxi start"
+    "start": "npx http-server ./dist"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.10",
