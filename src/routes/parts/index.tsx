@@ -1,3 +1,4 @@
+'use client'
 import { For, createEffect, createMemo } from "solid-js";
 import { selectedParts, removePart } from "~/store/store";
 import { Button } from "~/components/ui/button";

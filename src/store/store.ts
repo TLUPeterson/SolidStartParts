@@ -1,3 +1,4 @@
+'use client'
 import { createSignal } from 'solid-js';
 import { makePersisted } from '@solid-primitives/storage';
 import { Part } from "~/types/parts";
