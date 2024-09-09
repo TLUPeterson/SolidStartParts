@@ -13,12 +13,10 @@
   },
   "dependencies": {
     "@kobalte/core": "^0.13.2",
-    "@libsql/client": "^0.6.2",
     "@solid-primitives/storage": "^3.5.0",
     "@solidjs/router": "^0.13.3",
     "@solidjs/start": "^1.0.0",
     "autoprefixer": "^10.4.19",
-    "better-sqlite3": "^10.0.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "dotenv": "^16.4.5",
